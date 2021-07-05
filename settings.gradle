@@ -1,2 +1,3 @@
 rootProject.name = "KotlinWork"
 include ':app'
+include ':module_practice_coroutine'
