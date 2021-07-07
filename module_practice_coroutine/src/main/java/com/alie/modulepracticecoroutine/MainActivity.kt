@@ -1,9 +1,9 @@
 package com.alie.modulepracticecoroutine
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
 
 /**
  * GlobalScope:Process级别,activity/fragment销毁了也存在
@@ -15,18 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mBtn1.setOnClickListener {
-            GlobalScope.launch(Dispatchers.Main) {
-                val user= withContext(Dispatchers.IO) {
-                    println("===OnClick~~~")
-                    getUserData() }
-                mTv1.text = user?.mName + user?.mAge
-            }
-        }
+        mBtnJump.setOnClickListener { startActivity(Intent(this,SecondActivity::class.java)) }
     }
 
-    private suspend fun getUserData(): User {
-        delay(5000)
-       return User("西瓜", 16)
-    }
 }

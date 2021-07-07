@@ -4,60 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/purple_200"
+    tools:context=".SecondActivity">
 
     <TextView
         android:id="@+id/mTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textStyle="bold"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/mTvInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mTitle"
         android:text="DEFAULT"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mTitle" />
 
     <Button
-        android:id="@+id/mBtn1"
+        android:id="@+id/mBtnComputer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Computer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mTvInfo"
-        android:text="Car"
-        />
+        app:layout_constraintTop_toBottomOf="@id/mTvInfo" />
+
     <Button
-        android:id="@+id/mBtn2"
+        android:id="@+id/mBtnCpu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Cpu"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mBtn1"
-        android:text="Engine"
-        />
+        app:layout_constraintTop_toBottomOf="@id/mBtnComputer" />
+
     <Button
-        android:id="@+id/mBtn3"
+        android:id="@+id/mBtnGpu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Gpu"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mBtn2"
-        android:text="CarFrame"
-        />
+        app:layout_constraintTop_toBottomOf="@id/mBtnCpu" />
+
     <Button
-        android:id="@+id/mBtn4"
+        android:id="@+id/mBtnMemory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Memory"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mBtn3"
-        android:text="Wheel"
-        />
+        app:layout_constraintTop_toBottomOf="@id/mBtnGpu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
