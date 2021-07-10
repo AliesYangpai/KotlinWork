@@ -2,3 +2,4 @@ rootProject.name = "KotlinWork"
 include ':app'
 include ':module_practice_coroutine'
 include ':module_practice_mvvm_frame'
+include ':module_practice_mvvm_frame_coroutine'
