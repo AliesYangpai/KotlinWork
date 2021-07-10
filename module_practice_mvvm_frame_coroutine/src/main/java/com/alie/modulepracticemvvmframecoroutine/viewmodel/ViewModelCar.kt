@@ -2,11 +2,13 @@ package com.alie.modulepracticemvvmframecoroutine.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.alie.modulepracticemvvmframecoroutine.data.CarBean
 import com.alie.modulepracticemvvmframecoroutine.data.CarFrameBean
 import com.alie.modulepracticemvvmframecoroutine.data.EngineBean
 import com.alie.modulepracticemvvmframecoroutine.data.WheelBean
 import com.alie.modulepracticemvvmframecoroutine.repo.RepoCar
+import kotlinx.coroutines.launch
 
 class ViewModelCar : ViewModel() {
 
@@ -19,18 +21,30 @@ class ViewModelCar : ViewModel() {
     val mLiveDataWheel by lazy { MutableLiveData<WheelBean>() }
 
     fun loadCar() {
-        mLiveDataCar.value = mRepoCar.loadDataCar()
+        viewModelScope.launch {
+            println(" Thread:${Thread.currentThread().name}")
+            mRepoCar.loadDataCar().let {
+                println(" Thread:${Thread.currentThread().name}")
+                mLiveDataCar.value = it }
+        }
     }
 
     fun loadEngine() {
-        mLiveDataEngine.value = mRepoCar.loadDataEngine()
+        viewModelScope.launch {
+            mRepoCar.loadDataEngine().let { mLiveDataEngine.value = it }
+        }
     }
 
+
     fun loadCarFrame() {
-        mLiveDataCarFrame.value = mRepoCar.loadDataCarFrame()
+       viewModelScope.launch {
+           mRepoCar.loadDataCarFrame().let { mLiveDataCarFrame.value = it }
+       }
     }
 
     fun loadWheel() {
-        mLiveDataWheel.value = mRepoCar.loadDataWheel()
+      viewModelScope.launch {
+          mRepoCar.loadDataWheel().let { mLiveDataWheel.value = it }
+      }
     }
 }

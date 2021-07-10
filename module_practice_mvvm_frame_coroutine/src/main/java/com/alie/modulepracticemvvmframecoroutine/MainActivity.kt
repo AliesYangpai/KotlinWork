@@ -1,6 +1,5 @@
 package com.alie.modulepracticemvvmframecoroutine
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -19,14 +18,13 @@ class MainActivity : AppCompatActivity() {
         initViews()
     }
 
-    @SuppressLint("SetTextI18n")
-    fun initObserve() {
-        mViewModelCar.mLiveDataCar.observe(this,{ mTvInfo.text = it?.mCarFrameBean?.mName+it?.mEngineBean?.mName+it?.mWheelBean?.mName })
-        mViewModelCar.mLiveDataEngine.observe(this,{mTvInfo.text = it?.mName})
-        mViewModelCar.mLiveDataCarFrame.observe(this,{mTvInfo.text = it?.mName})
-        mViewModelCar.mLiveDataWheel.observe(this,{mTvInfo.text = it?.mName})
+    private fun initObserve() {
+        mViewModelCar.mLiveDataCar.observe(this,{mTvInfo.text = it?.toString()})
+        mViewModelCar.mLiveDataEngine.observe(this,{mTvInfo.text = it?.toString()})
+        mViewModelCar.mLiveDataCarFrame.observe(this,{mTvInfo.text = it?.toString()})
+        mViewModelCar.mLiveDataWheel.observe(this,{mTvInfo.text = it?.toString()})
     }
-    fun initViews(){
+    private fun initViews(){
         mBtn1.setOnClickListener { mViewModelCar.loadCar() }
         mBtn2.setOnClickListener { mViewModelCar.loadEngine() }
         mBtn3.setOnClickListener { mViewModelCar.loadCarFrame() }

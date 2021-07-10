@@ -1,21 +1,19 @@
 package com.alie.modulepracticemvvmframecoroutine.repo
 
+import com.alie.modulepracticemvvmframecoroutine.api.ApiHttpClient
+import com.alie.modulepracticemvvmframecoroutine.api.service.ServiceCar
 import com.alie.modulepracticemvvmframecoroutine.data.CarBean
 import com.alie.modulepracticemvvmframecoroutine.data.CarFrameBean
 import com.alie.modulepracticemvvmframecoroutine.data.EngineBean
-import com.alie.modulepracticemvvmframecoroutine.data.WheelBean
 
 class RepoCar {
-    fun loadDataCar():CarBean?{
-        return CarBean(loadDataEngine(),loadDataCarFrame(),loadDataWheel())
+
+    private val mCarApi by lazy { ApiHttpClient.getInstance().generateService(ServiceCar::class.java) }
+
+    suspend fun loadDataCar(): CarBean? {
+        return mCarApi?.loadCar()
     }
-    fun loadDataEngine():EngineBean?{
-        return EngineBean("Engine:Ferrari V12")
-    }
-    fun loadDataCarFrame():CarFrameBean?{
-        return CarFrameBean("CarFrame:Ferrari 001")
-    }
-    fun loadDataWheel():WheelBean?{
-        return WheelBean("Bridge Stone rainy")
-    }
+    suspend fun loadDataEngine(): EngineBean? = mCarApi?.loadEngine()
+    suspend fun loadDataCarFrame(): CarFrameBean? = mCarApi?.loadCarFrame()
+    suspend fun loadDataWheel() = mCarApi?.loadWheel()
 }
