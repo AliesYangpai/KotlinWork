@@ -19,10 +19,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObserve() {
-        mViewModelCar.mLiveDataCar.observe(this,{mTvInfo.text = it?.toString()})
-        mViewModelCar.mLiveDataEngine.observe(this,{mTvInfo.text = it?.toString()})
-        mViewModelCar.mLiveDataCarFrame.observe(this,{mTvInfo.text = it?.toString()})
-        mViewModelCar.mLiveDataWheel.observe(this,{mTvInfo.text = it?.toString()})
+        mViewModelCar.mLiveDataCar.observe(this,{
+            mTvInfo.text = it.let {
+                if (it.isSuccess) {
+                    it.getOrNull()?.data?.toString()
+                } else {
+                    it.exceptionOrNull()?.localizedMessage
+                }
+            }
+        })
+        mViewModelCar.mLiveDataEngine.observe(this,{
+            mTvInfo.text = it.let {
+                if (it.isSuccess) {
+                    it.getOrNull()?.data?.toString()
+                } else {
+                    it.exceptionOrNull()?.localizedMessage
+                }
+            }
+        })
+        mViewModelCar.mLiveDataCarFrame.observe(this,{
+            mTvInfo.text = it.let {
+                if (it.isSuccess) {
+                    it.getOrNull()?.data.toString()
+                }else{
+                    it.exceptionOrNull()?.localizedMessage
+                }
+            }
+        })
+        mViewModelCar.mLiveDataWheel.observe(this,{
+            mTvInfo.text = it.let {
+                if (it.isSuccess) {
+                    it.getOrNull()?.data?.toString()
+                }else{
+                    it.exceptionOrNull()?.localizedMessage
+                }
+            }
+        })
     }
     private fun initViews(){
         mBtn1.setOnClickListener { mViewModelCar.loadCar() }
