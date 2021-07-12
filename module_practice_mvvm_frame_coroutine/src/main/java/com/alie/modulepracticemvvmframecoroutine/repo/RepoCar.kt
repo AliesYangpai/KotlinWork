@@ -2,10 +2,9 @@ package com.alie.modulepracticemvvmframecoroutine.repo
 
 import com.alie.modulepracticemvvmframecoroutine.api.ApiHttpClient
 import com.alie.modulepracticemvvmframecoroutine.api.service.ServiceCar
-import com.alie.modulepracticemvvmframecoroutine.data.CarBean
-import com.alie.modulepracticemvvmframecoroutine.data.CarFrameBean
-import com.alie.modulepracticemvvmframecoroutine.data.EngineBean
-import com.alie.modulepracticemvvmframecoroutine.data.WheelBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.CarBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.CarFrameBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.EngineBean
 import com.alie.modulepracticemvvmframecoroutine.data.http.HttpResponse
 
 class RepoCar {

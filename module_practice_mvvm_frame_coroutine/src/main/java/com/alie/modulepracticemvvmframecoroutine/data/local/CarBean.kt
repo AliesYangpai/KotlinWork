@@ -1,4 +1,4 @@
-package com.alie.modulepracticemvvmframecoroutine.data
+package com.alie.modulepracticemvvmframecoroutine.data.local
 
 data class CarBean(
     var name:String? = "",

@@ -3,10 +3,10 @@ package com.alie.modulepracticemvvmframecoroutine.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alie.modulepracticemvvmframecoroutine.data.CarBean
-import com.alie.modulepracticemvvmframecoroutine.data.CarFrameBean
-import com.alie.modulepracticemvvmframecoroutine.data.EngineBean
-import com.alie.modulepracticemvvmframecoroutine.data.WheelBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.CarBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.CarFrameBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.EngineBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.WheelBean
 import com.alie.modulepracticemvvmframecoroutine.data.http.HttpResponse
 import com.alie.modulepracticemvvmframecoroutine.repo.RepoCar
 import kotlinx.coroutines.launch

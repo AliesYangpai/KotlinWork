@@ -1,10 +1,10 @@
 package com.alie.modulepracticemvvmframecoroutine.api.service
 
 import com.alie.modulepracticemvvmframecoroutine.api.ConstHttpUrl
-import com.alie.modulepracticemvvmframecoroutine.data.CarBean
-import com.alie.modulepracticemvvmframecoroutine.data.CarFrameBean
-import com.alie.modulepracticemvvmframecoroutine.data.EngineBean
-import com.alie.modulepracticemvvmframecoroutine.data.WheelBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.CarBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.CarFrameBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.EngineBean
+import com.alie.modulepracticemvvmframecoroutine.data.local.WheelBean
 import com.alie.modulepracticemvvmframecoroutine.data.http.HttpResponse
 import retrofit2.http.GET
 
