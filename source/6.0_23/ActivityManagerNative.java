@@ -504,7 +504,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             IApplicationThread app = ApplicationThreadNative.asInterface(
                     data.readStrongBinder());
             if (app != null) {
-                attachApplication(app);
+                attachApplication(app); // 此处的调用在“ActivityManagerService”啦
             }
             reply.writeNoException();
             return true;
