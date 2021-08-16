@@ -19,10 +19,17 @@ fun main(array: Array<String>) {
     // 使用3
     val c = 9
     val num3 = calNumIncrease119(c) { it -> it * 6 }
-    val num4 = calNumIncrease119(c) { it  * 6 } // 函数参数中有高阶函数，并且高阶函数只有一个参数时，声明和->可以省略，直接写返回表达式
+    val num4 = calNumIncrease119(c) { it * 6 } // 函数参数中有高阶函数，并且高阶函数只有一个参数时，声明和->可以省略，直接写返回表达式
     println("num3:${num3}  num3:${num4}")
+
+    //==========================================
+//    calNumIncrease119Again(5,6,{a,b->a+b})
+//    calNumIncrease119Again(5, 6) { a, b -> a + b }
+    calNumIncrease119Again { a, b -> a + b }
 }
 
 fun calNum119(a: Int, b: Int, block: (Int, Int) -> Int): Int = block(a, b)
 
 fun calNumIncrease119(a: Int, block: (Int) -> Int): Int = block(a)
+
+fun calNumIncrease119Again(a: Int = 0, b: Int = 0, block: (Int, Int) -> Int): Int = block(a, b)
