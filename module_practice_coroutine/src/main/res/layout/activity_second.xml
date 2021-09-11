@@ -59,4 +59,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mBtnGpu" />
 
+
+    <Button
+        android:id="@+id/mBtnHashCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HashCode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mBtnMemory" />
+
+
+    <Button
+        android:id="@+id/mBtnGenerateNew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="generate New"
+        app:layout_constraintStart_toEndOf="@+id/mBtnHashCode"
+        app:layout_constraintTop_toTopOf="@+id/mBtnHashCode"
+        app:layout_constraintBottom_toBottomOf="@+id/mBtnHashCode"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
