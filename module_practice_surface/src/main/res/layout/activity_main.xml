@@ -6,13 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+
+    <Space
+        android:id="@+id/s_anchor_camera"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.25"
+        />
+
+    <com.alie.surfacework.view.CameraSurfaceView
+        android:id="@+id/sv_camera"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/s_anchor_camera"
+        app:layout_constraintEnd_toEndOf="@id/s_anchor_camera"
+        app:layout_constraintTop_toTopOf="@id/s_anchor_camera"
+        app:layout_constraintBottom_toBottomOf="@id/s_anchor_camera"
+        />
+
+    <com.alie.surfacework.view.LightSurfaceView
+        android:id="@+id/sv_light"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/s_anchor_camera"
+        app:layout_constraintEnd_toEndOf="@id/s_anchor_camera"
+        app:layout_constraintTop_toBottomOf="@id/s_anchor_camera"
+        />
+
+
+    <Button
+        android:id="@+id/btn_open_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        app:layout_constraintStart_toStartOf="@id/s_anchor_camera"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="打开摄像头"
+        />
+
+    <Button
+        android:id="@+id/btn_open_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/btn_open_camera"
+        app:layout_constraintTop_toTopOf="@id/btn_open_camera"
+        android:text="打开灯带"
+
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

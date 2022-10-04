@@ -1,4 +1,4 @@
-package com.alie.cameramergeshow
+package com.alie.surfacework
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
