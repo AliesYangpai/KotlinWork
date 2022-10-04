@@ -2,14 +2,21 @@ package com.alie.surfacework.data
 
 import com.alie.surfacework.source.CameraDeviceDataSource
 import com.alie.surfacework.source.LightDeviceDataSource
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * surface的数据仓
  */
-class SurfaceRepository(
+@Singleton
+class SurfaceRepository @Inject constructor(
     private val lightDeviceDataSource: LightDeviceDataSource,
     private val cameraDeviceDataSource: CameraDeviceDataSource
 ) {
-    fun fetchLightType(){}
-    fun fetchCameraData(){}
+    fun fetchLightType(){
+        lightDeviceDataSource.fetchLightType()
+    }
+    fun fetchCameraData(){
+        cameraDeviceDataSource.fetchCameraData()
+    }
 }

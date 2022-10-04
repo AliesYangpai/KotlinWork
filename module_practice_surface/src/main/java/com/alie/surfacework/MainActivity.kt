@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.alie.surfacework.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
@@ -30,8 +32,5 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        mainViewModel.liveDataLight.observe(this) {
-//            binding.svLight.updateData(it)
-        }
     }
 }

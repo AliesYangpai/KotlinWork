@@ -1,4 +1,11 @@
 package com.alie.surfacework.source
 
-class LightDeviceDataSource {
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class LightDeviceDataSource @Inject constructor() {
+    fun fetchLightType() {
+        println("LightDeviceDataSource fetchLightType")
+    }
 }
