@@ -1,9 +1,7 @@
 package com.alie.kotlinwork
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
 
-@HiltAndroidApp
 class KotlinWorkApp : Application() {
     /**
      * Advantage of Hilt

@@ -1,8 +1,22 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
 rootProject.name = "KotlinWork"
 include ':app'
-include ':module_practice_coroutine'
-include ':module_practice_mvvm_frame'
-include ':module_practice_mvvm_frame_coroutine'
-include ':module_practice_base_learn'
-include ':module_practice_learn_view'
-include ':module_practice_hilt'
+//include ':module_practice_coroutine'
+//include ':module_practice_mvvm_frame'
+//include ':module_practice_mvvm_frame_coroutine'
+//include ':module_practice_base_learn'
+//include ':module_practice_learn_view'
+//include ':module_practice_hilt'
