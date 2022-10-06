@@ -17,8 +17,9 @@ class MainActivity : AppCompatActivity() {
             binding = it
             it.root
         })
+        initObserver()
         initView()
-        initData()
+
     }
 
     private fun initView() {
@@ -29,8 +30,26 @@ class MainActivity : AppCompatActivity() {
         binding.btnOpenLight.setOnClickListener {
             mainViewModel.startLightBreath()
         }
+        binding.btn3.setOnClickListener {
+//            mainViewModel.test01ThreadAndLiveData()
+            mainViewModel.testDataListThreadAndLiveData()
+        }
     }
 
-    private fun initData() {
+
+    private fun initTestObserver() {
+        mainViewModel.testLiveData.observe(this) {
+            println("initTestObserver testPerson $it thread:${Thread.currentThread().name}")
+        }
+        mainViewModel.testLiveDataList.observe(this) {
+            it.forEach { testPerson ->
+                println("initTestObserver testPerson name:${testPerson.name} thread:${Thread.currentThread().name}")
+            }
+        }
+    }
+
+
+    private fun initObserver() {
+        initTestObserver()
     }
 }

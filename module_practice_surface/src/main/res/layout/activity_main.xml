@@ -53,8 +53,15 @@
         app:layout_constraintStart_toEndOf="@id/btn_open_camera"
         app:layout_constraintTop_toTopOf="@id/btn_open_camera"
         android:text="打开灯带"
-
         />
 
 
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/sv_light"
+        app:layout_constraintTop_toTopOf="@id/sv_light"
+        android:text="livedata+thread"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
