@@ -4,10 +4,14 @@ package com.alie.surfacework
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.alie.surfacework.data.SurfaceRepository
 import com.alie.surfacework.test.TestRepository
 import com.alie.surfacework.test.entity.TestPerson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.concurrent.thread
 
@@ -21,7 +25,7 @@ class MainViewModel @Inject constructor(
     val testLiveData:LiveData<TestPerson> = _testLiveData
 
     private val _testListLiveData:MutableLiveData<List<TestPerson>> = MutableLiveData()
-    val testLiveDataList:LiveData<List<TestPerson>> = _testListLiveData
+    val testListLiveData:LiveData<List<TestPerson>> = _testListLiveData
     fun startLightBreath() {
         surfaceRepository.fetchLightType()
     }
@@ -44,6 +48,17 @@ class MainViewModel @Inject constructor(
                 println("testDataListThreadAndLiveData testPerson thread:${Thread.currentThread().name}")
                 it.name.contains("a")
             })
+        }
+    }
+
+    fun testDataListFlowAnsLiveData() {
+        viewModelScope.launch {
+            testRepository.testDataListFlow
+                .flowOn(Dispatchers.IO)
+                .collect{
+                    println("xxxx collect thead:${Thread.currentThread().name}")
+                    _testListLiveData.value = it
+            }
         }
     }
 }

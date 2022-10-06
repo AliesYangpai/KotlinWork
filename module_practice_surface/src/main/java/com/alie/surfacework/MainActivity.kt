@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btn3.setOnClickListener {
 //            mainViewModel.test01ThreadAndLiveData()
-            mainViewModel.testDataListThreadAndLiveData()
+//            mainViewModel.testDataListThreadAndLiveData()
+            mainViewModel.testDataListFlowAnsLiveData()
         }
     }
 
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.testLiveData.observe(this) {
             println("initTestObserver testPerson $it thread:${Thread.currentThread().name}")
         }
-        mainViewModel.testLiveDataList.observe(this) {
+        mainViewModel.testListLiveData.observe(this) {
             it.forEach { testPerson ->
                 println("initTestObserver testPerson name:${testPerson.name} thread:${Thread.currentThread().name}")
             }
