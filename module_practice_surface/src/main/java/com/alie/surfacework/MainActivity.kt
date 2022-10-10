@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.alie.surfacework.databinding.ActivityMainBinding
+import com.alie.surfacework.test.TestViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
