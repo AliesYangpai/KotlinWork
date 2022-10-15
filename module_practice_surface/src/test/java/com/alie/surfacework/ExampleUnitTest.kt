@@ -1,5 +1,6 @@
 package com.alie.surfacework
 
+import kotlinx.coroutines.*
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -13,5 +14,20 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }
+
+    @Test
+    fun test01() {
+//       val scope = CoroutineScope(Job()+Dispatchers.Main)
+//        scope.launch {
+//            printData("test01")
+//        }
+    }
+
+    private suspend fun printData(tip:String) {
+        withContext(Dispatchers.IO) {
+            println(" $tip thread current thread ${Thread.currentThread().name}")
+        }
+        println()
     }
 }

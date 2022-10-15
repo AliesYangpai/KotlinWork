@@ -21,6 +21,11 @@ class TestActivity : AppCompatActivity() {
         })
         initListener()
         initObserver()
+        initTestWork()
+    }
+
+    private fun initTestWork() {
+        testViewModel.testWork01()
     }
 
     private fun initObserver() {

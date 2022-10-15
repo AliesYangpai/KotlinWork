@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinWork">
         <activity
-            android:name=".TestActivity"
+            android:name=".test.TestActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

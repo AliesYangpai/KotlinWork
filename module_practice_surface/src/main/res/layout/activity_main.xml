@@ -64,4 +64,12 @@
         app:layout_constraintTop_toTopOf="@id/sv_light"
         android:text="livedata+thread"
         />
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/btn3"
+        app:layout_constraintTop_toTopOf="@id/btn3"
+        android:text="跳转"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
