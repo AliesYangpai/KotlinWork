@@ -3,6 +3,7 @@ package com.alie.modulepracticecoroutine
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.UiThread
 import com.alie.modulepracticecoroutine.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -37,13 +38,15 @@ class MainActivity : AppCompatActivity() {
 //        test01() // 协程异常-job()
 //        test02() // 协程异常-SupervisorJob()
         test03() // 协程异常-supervisorScope{}
+        test04()
+        test05()
     }
 
 
     /**
      * test01
      * job()
-     * cancel 异常传递
+     * child异常-Scope-other child
      */
     private fun test01() {
         val scope =
@@ -68,7 +71,8 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * test02
-     * Su
+     * SupervisorJob()
+     * child异常---Scope 不通知 other child
      */
     private fun test02() {
         val scope =
@@ -109,6 +113,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun test04() {
+      val scope =  CoroutineScope(Job()+Dispatchers.Main)
 
+       val job1 = scope.launch(Dispatchers.IO) {
+        }
+        println("test04 parentjob:${scope.coroutineContext.job.hashCode()} job1: ${job1.hashCode()}")
+    }
+
+
+    private fun test05() {
+        val job1 = CoroutineScope(Job()+Dispatchers.Main).launch {
+            println("test05 do in launch job:${coroutineContext.job.hashCode()}")
+        }
+        println("test05 launch return job1:${job1.hashCode()}")
+    }
 
 }

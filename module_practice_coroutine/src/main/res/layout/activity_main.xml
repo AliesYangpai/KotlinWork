@@ -29,4 +29,13 @@ tools:context=".MainActivity">
         />
 
 
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/mBtnJump"
+        app:layout_constraintTop_toBottomOf="@id/mBtnJump"
+        android:text="nihao"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
