@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
 //        test01() // 协程异常-job()
 //        test02() // 协程异常-SupervisorJob()
         test03() // 协程异常-supervisorScope{}
-        test04()
-        test05()
+        test04() // 这俩个方法说明 launch中传入的dispatch 会生成一个新的job 不同于parent
+        test05() // 这俩个方法说明 launch中传入的dispatch 会生成一个新的job 不同于parent
     }
 
 
