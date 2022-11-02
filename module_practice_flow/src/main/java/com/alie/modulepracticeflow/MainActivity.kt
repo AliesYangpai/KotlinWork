@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.btn1.setOnClickListener {
-            mainViewModel.login()
+            lifecycleScope.launch {
+                mainViewModel.login(this)
+            }
         }
     }
 

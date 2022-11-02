@@ -2,6 +2,7 @@ package com.alie.modulepracticeflow
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -11,12 +12,17 @@ class MainViewModel : ViewModel() {
         UserRepository(UserDataSource())
     }
 
-    private val _loginUiState = MutableStateFlow("")
+    private val _loginUiState = MutableStateFlow("unknown")
     val loginUiState: StateFlow<String> = _loginUiState
 
-
-    fun login(name: String = "") {
+    init {
         viewModelScope.launch {
+            login(this)
+        }
+    }
+
+    suspend fun login(scope: CoroutineScope = viewModelScope, name: String = "") {
+        scope.launch {
             userRepository.login(name).collectLatest {
                 println("===login data $it")
                 _loginUiState.value = when {
