@@ -23,22 +23,38 @@ class SecondActivity : AppCompatActivity() {
         initRecyclerView()
     }
 
+    private  var list =   listOf(
+        Person("西瓜"),
+        Person("冬瓜"),
+        Person("南瓜"),
+        Person("北瓜"),
+        Person("哈密瓜"),
+        Person("黄瓜"),
+        Person("蓝瓜"),
+        Person("绿瓜")
+    )
+
+    var num = 0;
     private fun initRecyclerView() {
         binding.rv1.let {
             it.adapter = MyAdapter()
             it.layoutManager = GridLayoutManager(this, 8)
         }
-        (binding.rv1.adapter as MyAdapter).submitList(
-            listOf(
-                Person("西瓜"),
-                Person("西瓜"),
-                Person("西瓜"),
-                Person("西瓜"),
-                Person("西瓜"),
-                Person("西瓜"),
-                        Person("西瓜"),
-                Person("西瓜")
-            )
-        )
+
+        binding.btn1.setOnClickListener {
+            (binding.rv1.adapter as MyAdapter).submitList(list)
+        }
+        binding.btn2.setOnClickListener {
+            num++
+            val newList = list.toMutableList()
+            val target = newList.find {
+                it.name == "哈密瓜"
+            }
+           val targetIndex = newList.indexOf(target)
+            newList[targetIndex] = Person("哈密瓜", count = num)
+
+            (binding.rv1.adapter as MyAdapter).submitList(newList)
+            list = newList
+        }
     }
 }
