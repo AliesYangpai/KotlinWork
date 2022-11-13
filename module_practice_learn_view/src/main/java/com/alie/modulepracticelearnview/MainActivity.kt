@@ -1,5 +1,6 @@
 package com.alie.modulepracticelearnview
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -10,6 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initView()
+        startActivity(Intent(this,SecondActivity::class.java))
     }
 
     /**
