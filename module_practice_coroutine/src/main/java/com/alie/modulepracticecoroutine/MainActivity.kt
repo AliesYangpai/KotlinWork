@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.UiThread
+import androidx.lifecycle.lifecycleScope
 import com.alie.modulepracticecoroutine.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
+import kotlin.concurrent.thread
 import kotlin.coroutines.coroutineContext
 
 /**
@@ -30,6 +32,11 @@ class MainActivity : AppCompatActivity() {
                     SecondActivity::class.java
                 )
             )
+        }
+        binding.mBtnTestRunBlock.setOnClickListener {
+//            test06()
+//            test07()
+            test08()
         }
         initTestWork()
     }
@@ -79,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             CoroutineScope(SupervisorJob() + Dispatchers.Main + CoroutineExceptionHandler { coroutineContext, throwable ->
                 println(" test02 error ${throwable.message}")
             })
-       val job = scope.launch {
+        val job = scope.launch {
             println("test02 1")
             val data = 5 / 0
         }
@@ -114,19 +121,85 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun test04() {
-      val scope =  CoroutineScope(Job()+Dispatchers.Main)
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
 
-       val job1 = scope.launch(Dispatchers.IO) {
+        val job1 = scope.launch(Dispatchers.IO) {
         }
         println("test04 parentjob:${scope.coroutineContext.job.hashCode()} job1: ${job1.hashCode()}")
     }
 
 
     private fun test05() {
-        val job1 = CoroutineScope(Job()+Dispatchers.Main).launch {
+        val job1 = CoroutineScope(Job() + Dispatchers.Main).launch {
             println("test05 do in launch job:${coroutineContext.job.hashCode()}")
         }
         println("test05 launch return job1:${job1.hashCode()}")
+    }
+
+    /**
+     * test runBlocking
+     * 这里的runBlocking阻塞的是当前线程（此代码块运行在哪个线程，就阻塞哪个线程），从其中的源码中就可以看到
+     * 这个依靠的是当前线程的阻塞
+     */
+    private fun test06() {
+        runBlocking {
+            launch {
+//                delay(1000)
+                println("test06 hello")
+            }
+            println("test06 world")
+        }
+        println("test06 this out of runBlocking")
+    }
+
+    private fun test07() {
+        runBlocking {
+            coroutineScope {
+                launch{
+                    delay(2000)
+                    println("test07 coroutineScope world1 thread")
+                }
+                launch {
+                    delay(1000)
+                    println("test07 coroutineScope world2 thread")
+                }
+                delay(3000)
+                println("test07 coroutineScope hello thread")
+            }
+            println("test07 out of coroutineScope world thread")
+        }
+    }
+
+    private fun test08 () {
+        lifecycleScope.launch {
+//            launch {
+//                delay(1000)
+//                println("test08 world1")
+//            }
+//            launch {
+//                delay(2000)
+//                println("test08 world2")
+//            }
+            testDelayA()
+            testDelayB()
+            delay(3000)
+            println("test08 hello thread:${Thread.currentThread().name}")
+        }
+        println("test08 out of launch thread:${Thread.currentThread().name}")
+    }
+
+    private suspend fun testDelayA(){
+        withContext(Dispatchers.IO) {
+            delay(1000)
+            println("test08 world1 thread:${Thread.currentThread().name}")
+        }
+    }
+
+    private suspend fun testDelayB(){
+        withContext(Dispatchers.IO) {
+            delay(2000)
+            println("test08 world2 thread:${Thread.currentThread().name}")
+        }
     }
 
 }
