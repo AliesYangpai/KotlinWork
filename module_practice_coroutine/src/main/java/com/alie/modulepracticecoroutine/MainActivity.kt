@@ -38,8 +38,16 @@ class MainActivity : AppCompatActivity() {
 //            test07()
             test08()
         }
+        binding.mBtnTestRunBlock2.setOnClickListener {
+            test09()
+        }
+
+        binding.mBtnTestCoroutine3.setOnClickListener {
+            test10()
+        }
         initTestWork()
     }
+
 
     private fun initTestWork() {
 //        test01() // 协程异常-job()
@@ -172,34 +180,69 @@ class MainActivity : AppCompatActivity() {
 
     private fun test08 () {
         lifecycleScope.launch {
-//            launch {
-//                delay(1000)
-//                println("test08 world1")
-//            }
-//            launch {
-//                delay(2000)
-//                println("test08 world2")
-//            }
+
             testDelayA()
             testDelayB()
-            delay(3000)
+            delay(2000)
             println("test08 hello thread:${Thread.currentThread().name}")
         }
         println("test08 out of launch thread:${Thread.currentThread().name}")
     }
 
     private suspend fun testDelayA(){
-        withContext(Dispatchers.IO) {
+        coroutineScope {
             delay(1000)
-            println("test08 world1 thread:${Thread.currentThread().name}")
+            println("test08 testDelayA thread:${Thread.currentThread().name}")
         }
     }
 
     private suspend fun testDelayB(){
-        withContext(Dispatchers.IO) {
+        coroutineScope{
             delay(2000)
-            println("test08 world2 thread:${Thread.currentThread().name}")
+            println("test08 testDelayB thread:${Thread.currentThread().name}")
         }
     }
 
+    private fun test09() {
+        runBlocking {
+            test09A()
+            test09B()
+            println("test09 hello ")
+        }
+        println("test09 out of runBlocking")
+    }
+
+    private suspend fun test09A() {
+        delay(1000)
+        println("test09A ")
+    }
+
+    private suspend fun test09B() {
+        delay(1000)
+        println("test09B ")
+    }
+
+
+    private fun test10() {
+        lifecycleScope.launch {
+            test10a(this)
+            test10b(this)
+        }
+    }
+
+    private suspend fun test10a(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            delay(2000)
+            println("test10a delay finish")
+        }
+        println("test10a")
+    }
+
+    private suspend fun test10b(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            delay(1000)
+            println("test10b delay finish")
+        }
+        println("test10b")
+    }
 }

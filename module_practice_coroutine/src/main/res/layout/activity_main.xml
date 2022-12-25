@@ -47,5 +47,22 @@ tools:context=".MainActivity">
         android:text="test tun block"
         />
 
+    <Button
+        android:id="@+id/mBtnTestRunBlock2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mBtnTestRunBlock"
+        android:text="test tun block2"
+        />
+    <Button
+        android:id="@+id/mBtnTestCoroutine3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mBtnTestRunBlock"
+        android:text="mBtnTestCoroutine3"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
