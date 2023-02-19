@@ -43,7 +43,26 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.mBtnTestCoroutine3.setOnClickListener {
-            test10()
+//            test10()
+//            test11()
+//            test11child()
+
+            // ======================
+            // test11()
+//            test12()
+
+            // parent 异常
+//            test13()
+
+            // jobChild 异常
+//            test14()
+
+            // SupervisorJob parentError
+//            test15()
+            // SupervisorJob jobChildError
+            test16()
+
+//            test17()
         }
         initTestWork()
     }
@@ -163,7 +182,7 @@ class MainActivity : AppCompatActivity() {
     private fun test07() {
         runBlocking {
             coroutineScope {
-                launch{
+                launch {
                     delay(2000)
                     println("test07 coroutineScope world1 thread")
                 }
@@ -178,7 +197,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun test08 () {
+    private fun test08() {
         lifecycleScope.launch {
 
             testDelayA()
@@ -189,15 +208,15 @@ class MainActivity : AppCompatActivity() {
         println("test08 out of launch thread:${Thread.currentThread().name}")
     }
 
-    private suspend fun testDelayA(){
+    private suspend fun testDelayA() {
         coroutineScope {
             delay(1000)
             println("test08 testDelayA thread:${Thread.currentThread().name}")
         }
     }
 
-    private suspend fun testDelayB(){
-        coroutineScope{
+    private suspend fun testDelayB() {
+        coroutineScope {
             delay(2000)
             println("test08 testDelayB thread:${Thread.currentThread().name}")
         }
@@ -244,5 +263,206 @@ class MainActivity : AppCompatActivity() {
             println("test10b delay finish")
         }
         println("test10b")
+    }
+
+    // 1.在嵌套的协程代码中，parent coroutine取消，则所有child coroutine 都会取消。
+    private fun test11() {
+        CoroutineScope(Job() + Dispatchers.Main).launch {
+            println("test11 parent go")
+            delay(2000)
+            val jobSon1 = launch {
+                println("test11 son1 go")
+                delay(3000)
+                val jobGrandSon1 = launch {
+                    println("test11 grandSon1 go")
+                    delay(4000)
+                    println("test11 grandSon1 finish")
+                }
+                println("test11 son1 finish")
+            }
+            val jobSon2 = launch {
+                println("test11 son2 go")
+                delay(3000)
+                println("test11 son2 finish")
+            }
+            cancel()
+            if (this.isActive) {
+                println("test11 parent finish")
+            }
+            delay(500)
+            println("test11 parent state:${this.isActive}")
+        }
+    }
+
+    // 2.在嵌套的协程代码中，当出现某个child coroutine A取消时，不会影响兄弟节点下的coroutine运行。
+    // （当然了，基于1，2发生的时候, A中的child 也会取消的。）
+    private fun test12() {
+        CoroutineScope(Job() + Dispatchers.Main).launch {
+            println("test12 parent go")
+            delay(2000)
+            val jobSon1 = launch {
+                println("test12 son1 go")
+                delay(3000)
+                val jobGrandSon1 = launch {
+                    println("test12 grandSon1 go")
+                    delay(4000)
+                    println("test12 grandSon1 finish")
+                }
+                println("test12 son1 finish")
+            }
+            val jobSon2 = launch {
+                println("test12 son2 go")
+                delay(3000)
+                println("test12 son2 finish")
+            }
+            jobSon1.cancel()
+            println("test12 parent finish")
+        }
+    }
+
+
+    // parent error
+    private fun test13() {
+            CoroutineScope(Job() + Dispatchers.Main).launch(CoroutineExceptionHandler { coroutineContext, throwable ->
+                println("test13 parent error msg:${throwable.message}")
+            }) {
+                println("test13 parent go")
+                delay(2000)
+                val jobSon1 = launch {
+                    println("test13 son1 go")
+                    delay(3000)
+                    val jobGrandSon1 = launch {
+                        println("test13 grandSon1 go")
+                        delay(4000)
+                        println("test13 grandSon1 finish")
+                    }
+                    println("test13 son1 finish")
+                }
+                val jobSon2 = launch {
+                    println("test13 son2 go")
+                    delay(3000)
+                    println("test13 son2 finish")
+                }
+//                delay(500)
+                val ret = 5/0
+                println("test13 parent finish")
+            }
+    }
+
+
+
+    // jobSon1 error
+    private fun test14() {
+        CoroutineScope(Job() + Dispatchers.Main).launch(CoroutineExceptionHandler { coroutineContext, throwable ->
+            println("test14 parent error msg:${throwable.message}")
+        }) {
+            println("test14 parent go")
+            delay(2000)
+            val jobSon1 = launch {
+                println("test14 son1 go")
+                val ret = 5/0
+                delay(3000)
+                val jobGrandSon1 = launch {
+                    println("test14 grandSon1 go")
+                    delay(4000)
+                    println("test14 grandSon1 finish")
+                }
+                println("test14 son1 finish")
+            }
+            val jobSon2 = launch {
+                println("test14 son2 go")
+                delay(3000)
+                println("test14 son2 finish")
+            }
+            delay(500)
+            if (this.isActive) {
+                println("test14 parent finish")
+            }
+        }
+    }
+
+
+    // SupervisorJob parentError
+    private fun test15() {
+        CoroutineScope(SupervisorJob() + Dispatchers.Main).launch(CoroutineExceptionHandler { coroutineContext, throwable ->
+            println("test15 parent error msg:${throwable.message}")
+        }) {
+            println("test15 parent go")
+            delay(2000)
+            val ret = 5/0
+            val jobSon1 = launch {
+                println("test15 son1 go")
+                delay(3000)
+                val jobGrandSon1 = launch {
+                    println("test15 grandSon1 go")
+                    delay(4000)
+                    println("test15 grandSon1 finish")
+                }
+                println("test15 son1 finish")
+            }
+            val jobSon2 = launch {
+                println("test15 son2 go")
+                delay(3000)
+                println("test15 son2 finish")
+            }
+            delay(500)
+            if (this.isActive) {
+                println("test15 parent finish")
+            }
+        }
+    }
+
+
+
+    // SupervisorJob parentError
+    private fun test16() {
+        CoroutineScope(SupervisorJob() + Dispatchers.Main).launch(CoroutineExceptionHandler { coroutineContext, throwable ->
+            println("test16 parent error msg:${throwable.message}")
+        }) {
+            println("test16 parent go")
+            delay(2000)
+            val jobSon1 = launch(SupervisorJob()) { // 注意此处 要传入SupervisorJob，否则launch（）方法会创建默认 job
+                println("test16 son1 go")
+                val ret = 5/0
+                delay(3000)
+                val jobGrandSon1 = launch {
+                    println("test16 grandSon1 go")
+                    delay(4000)
+                    println("test16 grandSon1 finish")
+                }
+                println("test16 son1 finish")
+            }
+            val jobSon2 = launch {
+                println("test16 son2 go")
+                delay(3000)
+                println("test16 son2 finish")
+            }
+            delay(500)
+            if (this.isActive) {
+                println("test16 parent finish")
+            }
+        }
+    }
+
+    private fun test17() {
+      val scope =  CoroutineScope(Job() + Dispatchers.Main+CoroutineExceptionHandler { coroutineContext, throwable ->
+            println("test17 parent error msg:${throwable.message}")
+        })
+
+        scope.launch {
+            println("test17 parentA go")
+            delay(2000)
+            val ret = 5/0
+            if (this.isActive) {
+                println("test15 parentA finish")
+            }
+        }
+        scope.launch {
+            println("test17 parentB go")
+            delay(3000)
+            if (this.isActive) {
+                println("test17 parentB finish")
+            }
+        }
     }
 }
