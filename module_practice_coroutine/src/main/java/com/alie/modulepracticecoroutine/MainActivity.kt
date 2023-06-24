@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             binding = it
             it.root
         })
+        initTestWork()
         binding.mBtnJump.setOnClickListener {
             startActivity(
                 Intent(
@@ -41,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         binding.mBtnTestRunBlock2.setOnClickListener {
             test09()
         }
-
         binding.mBtnTestCoroutine3.setOnClickListener {
 //            test10()
 //            test11()
@@ -60,11 +60,14 @@ class MainActivity : AppCompatActivity() {
             // SupervisorJob parentError
 //            test15()
             // SupervisorJob jobChildError
-            test16()
+//            test16()
 
+            // Job异常捕获解读
 //            test17()
+
+            // scope scope.launch 的上下文
+            test18()
         }
-        initTestWork()
     }
 
 
@@ -323,32 +326,31 @@ class MainActivity : AppCompatActivity() {
 
     // parent error
     private fun test13() {
-            CoroutineScope(Job() + Dispatchers.Main).launch(CoroutineExceptionHandler { coroutineContext, throwable ->
-                println("test13 parent error msg:${throwable.message}")
-            }) {
-                println("test13 parent go")
-                delay(2000)
-                val jobSon1 = launch {
-                    println("test13 son1 go")
-                    delay(3000)
-                    val jobGrandSon1 = launch {
-                        println("test13 grandSon1 go")
-                        delay(4000)
-                        println("test13 grandSon1 finish")
-                    }
-                    println("test13 son1 finish")
+        CoroutineScope(Job() + Dispatchers.Main).launch(CoroutineExceptionHandler { coroutineContext, throwable ->
+            println("test13 parent error msg:${throwable.message}")
+        }) {
+            println("test13 parent go")
+            delay(2000)
+            val jobSon1 = launch {
+                println("test13 son1 go")
+                delay(3000)
+                val jobGrandSon1 = launch {
+                    println("test13 grandSon1 go")
+                    delay(4000)
+                    println("test13 grandSon1 finish")
                 }
-                val jobSon2 = launch {
-                    println("test13 son2 go")
-                    delay(3000)
-                    println("test13 son2 finish")
-                }
-//                delay(500)
-                val ret = 5/0
-                println("test13 parent finish")
+                println("test13 son1 finish")
             }
+            val jobSon2 = launch {
+                println("test13 son2 go")
+                delay(3000)
+                println("test13 son2 finish")
+            }
+//                delay(500)
+            val ret = 5 / 0
+            println("test13 parent finish")
+        }
     }
-
 
 
     // jobSon1 error
@@ -360,7 +362,7 @@ class MainActivity : AppCompatActivity() {
             delay(2000)
             val jobSon1 = launch {
                 println("test14 son1 go")
-                val ret = 5/0
+                val ret = 5 / 0
                 delay(3000)
                 val jobGrandSon1 = launch {
                     println("test14 grandSon1 go")
@@ -389,7 +391,7 @@ class MainActivity : AppCompatActivity() {
         }) {
             println("test15 parent go")
             delay(2000)
-            val ret = 5/0
+            val ret = 5 / 0
             val jobSon1 = launch {
                 println("test15 son1 go")
                 delay(3000)
@@ -413,7 +415,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     // SupervisorJob parentError
     private fun test16() {
         CoroutineScope(SupervisorJob() + Dispatchers.Main).launch(CoroutineExceptionHandler { coroutineContext, throwable ->
@@ -423,7 +424,7 @@ class MainActivity : AppCompatActivity() {
             delay(2000)
             val jobSon1 = launch(SupervisorJob()) { // 注意此处 要传入SupervisorJob，否则launch（）方法会创建默认 job
                 println("test16 son1 go")
-                val ret = 5/0
+                val ret = 5 / 0
                 delay(3000)
                 val jobGrandSon1 = launch {
                     println("test16 grandSon1 go")
@@ -445,14 +446,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun test17() {
-      val scope =  CoroutineScope(Job() + Dispatchers.Main+CoroutineExceptionHandler { coroutineContext, throwable ->
-            println("test17 parent error msg:${throwable.message}")
-        })
+        val scope =
+            CoroutineScope(Job() + Dispatchers.Main + CoroutineExceptionHandler { coroutineContext, throwable ->
+                println("test17 parent error msg:${throwable.message}")
+            })
 
         scope.launch {
             println("test17 parentA go")
             delay(2000)
-            val ret = 5/0
+            val ret = 5 / 0
             if (this.isActive) {
                 println("test15 parentA finish")
             }
@@ -465,4 +467,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun test18() {
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
+//        val scp = CoroutineScope(Dispatchers.Main)
+        // 0.parent - scope coroutineContext job
+        println("test18 scope:${scope.hashCode()} coroutineContext:${scope.coroutineContext.hashCode()} scope.coroutineContext.job:${scope.coroutineContext.job.hashCode()}")
+
+        val jobLaunch = scope.launch {
+            // 1.parent change : scope ,coroutineContext ,job
+            println("test18 launch scope:${this.hashCode()} coroutineContext:${this.coroutineContext.hashCode()} job:${this.coroutineContext.job.hashCode()}")
+
+            val jobInside = launch {
+                // 1.1 基于1 parent change : scope ,coroutineContext ,job
+                println("test18 jobInside launch scope:${this.hashCode()} coroutineContext:${this.coroutineContext.hashCode()} job:${this.coroutineContext.job.hashCode()}")
+            }
+        }
+   }
 }
